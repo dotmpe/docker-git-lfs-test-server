@@ -1,0 +1,5 @@
+
+- id: docker-lfs-test
+  main: docker-lfs-test
+  init: make build 
+
