@@ -5,13 +5,14 @@ default: build
 build:
 	docker build -t dotmpe/docker-lfs-test:latest .
 
-HOSTNAME := $(shell hostname -s)
+HOSTNAME ?= $(shell hostname -s)
+PORT ?= 8016
 
 run:
 	test -n "$$DCKR_VOL"
 	docker run --name $(HOSTNAME)-lfs-server -d \
-    --env 'LFS_HOST=localhost:8016' \
-    --publish 8016:8080 \
+    --env 'LFS_HOST=$(HOSTNAME):$(PORT)' \
+    --publish $(PORT):8080 \
     --env 'LFS_ADMINUSER=admin' \
 		--env 'LFS_ADMINPASS=admin' \
     --volume $$DCKR_VOL/$(HOSTNAME)-lfs-server/data:/data \
